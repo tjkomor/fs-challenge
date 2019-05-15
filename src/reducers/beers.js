@@ -7,6 +7,7 @@ export default function(state = [], action) {
       return [action.payload, ...state]
     case OPEN_COOLER:
       const beers = action.payload.data.map(beer => beer)
+      console.log(beers)
       return [...state, ...beers]
     case UPDATE_LIKES:
       return updateLikesCount(state, action)

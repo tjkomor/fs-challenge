@@ -13,10 +13,6 @@ class Cooler extends React.Component {
     this.props.openCooler()
   }
 
-  componentWillReceiveProps() {
-    this.forceUpdate()
-  }
-
   renderBeers() {
     return this.props.beers.map(beer => {
       return <Beer beer={beer}
