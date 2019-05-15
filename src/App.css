@@ -1,0 +1,55 @@
+.beer {
+  display: flex;
+  flex-direction: column;
+  margin-top: 2em;
+  font-weight: bold;
+}
+
+.like {
+  background-color: green;
+  width: 10%;
+  margin-top: 1em;
+}
+
+.dislike {
+  background-color: red;
+  width: 10%;
+  margin-top: .5em;
+}
+
+.add-beer {
+  display: flex;
+  justify-content: center;
+  width: 30%;
+  background-color: blue;
+  color: white;
+}
+
+.list-of-beers {
+  display: flex;
+  flex-direction: column;
+  flex-wrap: wrap;
+}
+
+.add-beer-to-cooler-btn {
+  background-color: green;
+  color: white;
+  margin-bottom: 1em;
+}
+
+.done-adding-beer {
+  color: white;
+  background-color: purple;
+}
+
+button {
+  cursor: pointer;
+  font-weight: bold;
+  font-size: 12pt;
+  color: white;
+}
+
+button:disabled {
+  background-color: gray;
+  cursor: not-allowed;
+}
