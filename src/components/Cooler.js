@@ -13,6 +13,10 @@ class Cooler extends React.Component {
     this.props.openCooler()
   }
 
+  componentWillReceiveProps() {
+    this.forceUpdate()
+  }
+
   renderBeers() {
     return this.props.beers.map(beer => {
       return <Beer beer={beer}
@@ -22,12 +26,23 @@ class Cooler extends React.Component {
     })
   }
 
+  verifyId = (beer) => {
+    if (!beer.id) {
+      beer.id = this.props.beers[1].id + 1
+      return beer
+    } else {
+      return beer
+    }
+  }
+
   increaseLikes = (beer) => {
-    this.props.updateLikes(beer, 'increase')
+    let verifiedBeer = this.verifyId(beer)
+    this.props.updateLikes(verifiedBeer, 'increase')
   }
 
   decreaseLikes = (beer) => {
-    this.props.updateLikes(beer, 'decrease')
+    let verifiedBeer = this.verifyId(beer)
+    this.props.updateLikes(verifiedBeer, 'decrease')
   }
 
   toggleBeerInput = () => {
@@ -45,7 +60,7 @@ class Cooler extends React.Component {
           Click here to add your favorite beer!
         </button>}
         <div>
-          {this.state.displayAddBeerInput && <BeerInput />}
+          {this.state.displayAddBeerInput && <BeerInput openCooler={this.props.openCooler} />}
         </div>
         <button
           className='done-adding-beer'
