@@ -23,7 +23,7 @@ class BeerInput extends React.Component {
           <h2>Add a Beer!</h2>
           <textarea onChange={this.handleChange} value={this.state.beer} />
           <div>
-            <button onClick={this.props.didUpdate} className="add-beer-to-cooler-btn">Add beer to cooler!</button>
+            <button className="add-beer-to-cooler-btn">Add beer to cooler!</button>
           </div>
         </form>
       </div>

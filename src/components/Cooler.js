@@ -9,21 +9,11 @@ import { localProxy, fsBeer } from 'endpoints'
 class Cooler extends React.Component {
   state = {
     displayAddBeerInput: false,
-    updatedBeers: [],
-    didUpdate: false
+    updatedBeers: []
   }
 
   componentDidMount() {
     this.props.openCooler()
-  }
-
-  renderUpdatedBeers() {
-    return this.state.updatedBeers.map(beer => {
-      return <Beer beer={beer}
-        increaseLikes={this.increaseLikes}
-        decreaseLikes={this.decreaseLikes}
-      />
-    })
   }
 
   renderBeers() {
@@ -77,11 +67,6 @@ class Cooler extends React.Component {
 
   toggleBeerInput = () => {
     this.setState({displayAddBeerInput: !this.state.displayAddBeerInput})
-  }
-
-  didUpdate = () => {
-    this.setState({didUpdate: true})
-    this.fetchBeers().then(res => res)
   }
 
   render() {
