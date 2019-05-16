@@ -3,14 +3,27 @@ import { connect } from 'react-redux'
 import * as actions from 'actions'
 import Beer from 'components/Beer'
 import BeerInput from 'components/BeerInput'
+import axios from 'axios'
+import { localProxy, fsBeer } from 'endpoints'
 
 class Cooler extends React.Component {
   state = {
-    displayAddBeerInput: false
+    displayAddBeerInput: false,
+    updatedBeers: [],
+    didUpdate: false
   }
 
   componentDidMount() {
     this.props.openCooler()
+  }
+
+  renderUpdatedBeers() {
+    return this.state.updatedBeers.map(beer => {
+      return <Beer beer={beer}
+        increaseLikes={this.increaseLikes}
+        decreaseLikes={this.decreaseLikes}
+      />
+    })
   }
 
   renderBeers() {
@@ -22,27 +35,53 @@ class Cooler extends React.Component {
     })
   }
 
-  verifyId = (beer) => {
-    if (!beer.id) {
-      beer.id = this.props.beers[1].id + 1
-      return beer
+  fetchBeers = async () => {
+    const response = await axios.get(localProxy + fsBeer)
+    .then(response => {
+      this.setState({updatedBeers: response.data})
+    })
+    .catch(error => {
+      return new Error(error)
+    })
+  }
+
+  setId = async (beer) => {
+    let newBeer
+    await this.fetchBeers().then(() => {
+      this.state.updatedBeers.some(b => {
+        if (b.name === beer.name) {
+          newBeer = b
+        }
+      })
+    })
+    return newBeer
+  }
+
+  increaseLikes = async (beer) => {
+    if (beer.id) {
+      this.props.updateLikes(beer, 'increase')
     } else {
-      return beer
+      let verifiedBeer = await this.setId(beer).then(result => Promise.resolve(result)).then(val => val)
+      this.props.updateLikes(verifiedBeer, 'increase')
     }
   }
 
-  increaseLikes = (beer) => {
-    let verifiedBeer = this.verifyId(beer)
-    this.props.updateLikes(verifiedBeer, 'increase')
-  }
-
-  decreaseLikes = (beer) => {
-    let verifiedBeer = this.verifyId(beer)
-    this.props.updateLikes(verifiedBeer, 'decrease')
+  decreaseLikes = async (beer) => {
+    if (beer.id) {
+      this.props.updateLikes(beer, 'decrease')
+    } else {
+      let verifiedBeer = await this.setId(beer).then(result => Promise.resolve(result)).then(val => val)
+      this.props.updateLikes(verifiedBeer, 'decrease')
+    }
   }
 
   toggleBeerInput = () => {
     this.setState({displayAddBeerInput: !this.state.displayAddBeerInput})
+  }
+
+  didUpdate = () => {
+    this.setState({didUpdate: true})
+    this.fetchBeers().then(res => res)
   }
 
   render() {
@@ -56,7 +95,7 @@ class Cooler extends React.Component {
           Click here to add your favorite beer!
         </button>}
         <div>
-          {this.state.displayAddBeerInput && <BeerInput openCooler={this.props.openCooler} />}
+          {this.state.displayAddBeerInput && <BeerInput didUpdate={this.didUpdate} />}
         </div>
         <button
           className='done-adding-beer'
@@ -65,9 +104,9 @@ class Cooler extends React.Component {
           I'm done adding beers
         </button>
         <h1>Cooler Beers!</h1>
-        <ul>
-          {this.renderBeers()}
-        </ul>
+          <ul>
+            {this.renderBeers()}
+          </ul>
       </div>
     )
   }

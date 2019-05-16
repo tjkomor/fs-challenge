@@ -13,8 +13,6 @@ class BeerInput extends React.Component {
   handleSubmit = event => {
     event.preventDefault()
     this.props.addBeer(this.state.beer)
-    // ^^^ wait for this to comeplete then call openCooler()
-    this.props.openCooler()
     this.setState({ beer: '' })
   }
 
@@ -25,7 +23,7 @@ class BeerInput extends React.Component {
           <h2>Add a Beer!</h2>
           <textarea onChange={this.handleChange} value={this.state.beer} />
           <div>
-            <button className="add-beer-to-cooler-btn">Add beer to cooler!</button>
+            <button onClick={this.props.didUpdate} className="add-beer-to-cooler-btn">Add beer to cooler!</button>
           </div>
         </form>
       </div>

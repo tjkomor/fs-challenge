@@ -56,6 +56,7 @@ export function updateLikes(beer, typeOfLike) {
 }
 
 export async function openCooler() {
+  console.log("OPEN COOLER CALLED")
   const response = axios.get(localProxy + fsBeer)
   .then(response => {
     return response
