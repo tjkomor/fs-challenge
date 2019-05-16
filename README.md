@@ -3,8 +3,9 @@
 ### README
 
 This is a React web application that allows users to add new beers to a cooler,
-and like or dislike a specific beer. I chose to use Redux for state management on the front end,
-which allows the user to have a seamless user experience without having to deal with constant re-rendering.
+and like or dislike a specific beer. I chose to use Redux for state management,
+which allows the user to have a seamless user experience without having to deal
+with constant re-rendering of the page.
 
 * To run this application you MUST run a proxy
  * RECOMMENDED PROXY: `git clone https://github.com/Rob--W/cors-anywhere.git`
