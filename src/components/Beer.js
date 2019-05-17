@@ -1,4 +1,5 @@
 import React from 'react'
+import Button from '@material-ui/core/Button';
 
 const Beer = props => (
   <div>
@@ -6,8 +7,24 @@ const Beer = props => (
       {props.beer.name}
       <br></br>
       Likes: {props.beer.likes}
-      <button className="like" onClick={() => props.increaseLikes(props.beer)}>Like</button>
-      <button className="dislike" onClick={() => props.decreaseLikes(props.beer)}>Dislike</button>
+      <div className="like-div">
+        <Button
+          variant="contained"
+          color="primary"
+          className="like-btn"
+          onClick={() => props.increaseLikes(props.beer)}>
+          Like!
+        </Button>
+      </div>
+      <div>
+        <Button
+          variant="contained"
+          color="secondary"
+          className="dislike-btn"
+          onClick={() => props.decreaseLikes(props.beer)}>
+          Dislike!
+        </Button>
+      </div>
     </li>
   </div>
 )

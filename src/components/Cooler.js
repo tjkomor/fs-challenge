@@ -5,6 +5,7 @@ import Beer from 'components/Beer'
 import BeerInput from 'components/BeerInput'
 import axios from 'axios'
 import { localProxy, fsBeer } from 'endpoints'
+import Button from '@material-ui/core/Button';
 
 class Cooler extends React.Component {
   state = {
@@ -73,21 +74,28 @@ class Cooler extends React.Component {
     return (
       <div>
         {!this.state.displayAddBeerInput &&
-        <button
-          className="add-beer"
-          onClick={this.toggleBeerInput}
-          >
-          Click here to add your favorite beer!
-        </button>}
+          <Button
+            variant="contained"
+            color="primary"
+            className='add-beer'
+            onClick={this.toggleBeerInput}>
+            Click here to add your favorite beer!
+          </Button>
+        }
         <div>
           {this.state.displayAddBeerInput && <BeerInput didUpdate={this.didUpdate} />}
         </div>
-        <button
-          className='done-adding-beer'
-          onClick={this.toggleBeerInput}
-          hidden={!this.state.displayAddBeerInput}>
-          I'm done adding beers
-        </button>
+        <div>
+          {this.state.displayAddBeerInput &&
+            <Button
+              variant="contained"
+              color="primary"
+              className='done-adding-beer'
+              onClick={this.toggleBeerInput}>
+              I'm done adding beers!
+            </Button>
+          }
+        </div>
         <h1>Cooler Beers!</h1>
           <ul>
             {this.renderBeers()}

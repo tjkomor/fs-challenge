@@ -5,36 +5,34 @@
   font-weight: bold;
 }
 
-.like {
-  background-color: green;
-  width: 10%;
-  margin-top: 1em;
+.like-btn {
+  padding-bottom: .5em;
+  margin-top: .5em;
+  width: 8em;
 }
 
-.dislike {
-  background-color: red;
-  width: 10%;
-  margin-top: .5em;
+.dislike-btn {
+  width: 8em;
+}
+
+.like-div {
+  padding-bottom: .5em
 }
 
 .add-beer {
   display: flex;
   justify-content: center;
-  width: 30%;
+  width: 40%;
   background-color: blue;
   color: white;
 }
 
-.list-of-beers {
-  display: flex;
-  flex-direction: column;
-  flex-wrap: wrap;
+.add-beer-to-cooler {
+  padding-bottom: 1em;
 }
 
-.add-beer-to-cooler-btn {
-  background-color: green;
-  color: white;
-  margin-bottom: 1em;
+.beer-input {
+  padding-bottom: 1em;
 }
 
 .done-adding-beer {
@@ -47,9 +45,4 @@ button {
   font-weight: bold;
   font-size: 12pt;
   color: white;
-}
-
-button:disabled {
-  background-color: gray;
-  cursor: not-allowed;
 }
