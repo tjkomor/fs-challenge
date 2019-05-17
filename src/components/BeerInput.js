@@ -30,7 +30,7 @@ class BeerInput extends React.Component {
               type="submit"
               variant="contained"
               color="secondary">
-              Click here to add your favorite beer!
+              Add Beer!
             </Button>
           </div>
         </form>
