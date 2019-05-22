@@ -5,7 +5,7 @@ import Button from '@material-ui/core/Button';
 import Input from '@material-ui/core/Input';
 
 class BeerInput extends React.Component {
-  state = {beer: ''}
+  state = { beer: '' }
 
   handleChange = event => {
     this.setState({ beer: event.target.value })

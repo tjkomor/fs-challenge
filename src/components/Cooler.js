@@ -5,16 +5,40 @@ import Beer from 'components/Beer'
 import BeerInput from 'components/BeerInput'
 import axios from 'axios'
 import { localProxy, fsBeer } from 'endpoints'
-import Button from '@material-ui/core/Button';
+import Button from '@material-ui/core/Button'
+import FuzzySearch from 'fuzzy-search'
+import Input from '@material-ui/core/Input';
 
 class Cooler extends React.Component {
   state = {
     displayAddBeerInput: false,
-    updatedBeers: []
+    updatedBeers: [],
+    fuzzySearch: false
+  }
+
+  fuzzySearch = (event) => {
+    if (event.target.value.length > 0) {
+      this.setState({fuzzySearch: true})
+    } else {
+      this.setState({fuzzySearch: false})
+    }
+    const searcher = new FuzzySearch(this.props.beers, ['name'], {
+      caseSensitive: false,
+    })
+    this.setState({updatedBeers: searcher.search(event.target.value)})
   }
 
   componentDidMount() {
     this.props.openCooler()
+  }
+
+  renderFuzzyBeers() {
+    return this.state.updatedBeers.map(beer => {
+      return <Beer beer={beer}
+        increaseLikes={this.increaseLikes}
+        decreaseLikes={this.decreaseLikes}
+      />
+    })
   }
 
   renderBeers() {
@@ -73,6 +97,7 @@ class Cooler extends React.Component {
   render() {
     return (
       <div>
+        <Input placeholder="Search Cooler" onChange={this.fuzzySearch}> </Input>
         {!this.state.displayAddBeerInput &&
           <Button
             variant="contained"
@@ -83,7 +108,7 @@ class Cooler extends React.Component {
           </Button>
         }
         <div>
-          {this.state.displayAddBeerInput && <BeerInput didUpdate={this.didUpdate} />}
+          {this.state.displayAddBeerInput && <BeerInput />}
         </div>
         <div>
           {this.state.displayAddBeerInput &&
@@ -97,9 +122,19 @@ class Cooler extends React.Component {
           }
         </div>
         <h1>Cooler Beers!</h1>
-          <ul>
-            {this.renderBeers()}
-          </ul>
+          {
+            !this.state.fuzzySearch &&
+            <ul>
+              {this.renderBeers()}
+            </ul>
+          }
+          {
+            this.state.fuzzySearch &&
+            <ul>
+              {this.renderFuzzyBeers()}
+            </ul>
+          }
+
       </div>
     )
   }
