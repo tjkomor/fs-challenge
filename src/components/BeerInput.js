@@ -25,8 +25,9 @@ class BeerInput extends React.Component {
           <div className="beer-input">
             <Input placeholder="Add Beer" onChange={this.handleChange} value={this.state.beer}> </Input>
           </div>
-          <div className='add-beer-to-cooler'>
+          <div className="add-beer-to-cooler">
             <Button
+              className="add-beer-to-cooler-btn"
               type="submit"
               variant="contained"
               color="secondary">

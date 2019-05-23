@@ -6,14 +6,12 @@ import { ADD_BEER,
          UPDATE_LIKES}
  from 'actions/types'
 
-export function addBeer(beer) {
-  const req = { name: beer, likes: 0 }
+export function addBeer(beerName) {
+  const req = { name: beerName, likes: 0 }
   const response = axios.post(localProxy + fsBeer, req)
   .then(response => {
     if (response.status === 204) {
       return req
-    } else if (response.status === 200) {
-      return response
     }
   })
   .catch(error => {
@@ -56,7 +54,6 @@ export function updateLikes(beer, typeOfLike) {
 }
 
 export async function openCooler() {
-  console.log("OPEN COOLER CALLED")
   const response = axios.get(localProxy + fsBeer)
   .then(response => {
     return response

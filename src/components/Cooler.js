@@ -16,6 +16,10 @@ class Cooler extends React.Component {
     fuzzySearch: false
   }
 
+  componentDidMount() {
+    this.props.openCooler()
+  }
+
   fuzzySearch = (event) => {
     if (event.target.value.length > 0) {
       this.setState({fuzzySearch: true})
@@ -28,21 +32,17 @@ class Cooler extends React.Component {
     this.setState({updatedBeers: searcher.search(event.target.value)})
   }
 
-  componentDidMount() {
-    this.props.openCooler()
-  }
-
-  renderFuzzyBeers() {
-    return this.state.updatedBeers.map(beer => {
-      return <Beer beer={beer}
-        increaseLikes={this.increaseLikes}
-        decreaseLikes={this.decreaseLikes}
-      />
-    })
+  setBeerList = () => {
+    let beers = this.props.beers
+    if (this.state.fuzzySearch) {
+      beers = this.state.updatedBeers
+    }
+    return beers
   }
 
   renderBeers() {
-    return this.props.beers.map(beer => {
+    let beers = this.setBeerList()
+    return beers.map(beer => {
       return <Beer beer={beer}
         increaseLikes={this.increaseLikes}
         decreaseLikes={this.decreaseLikes}
@@ -97,7 +97,9 @@ class Cooler extends React.Component {
   render() {
     return (
       <div>
-        <Input placeholder="Search Cooler" onChange={this.fuzzySearch}> </Input>
+        <div className="search">
+          <Input placeholder="Search Cooler!" onChange={this.fuzzySearch}> </Input>
+        </div>
         {!this.state.displayAddBeerInput &&
           <Button
             variant="contained"
@@ -122,19 +124,11 @@ class Cooler extends React.Component {
           }
         </div>
         <h1>Cooler Beers!</h1>
-          {
-            !this.state.fuzzySearch &&
-            <ul>
-              {this.renderBeers()}
-            </ul>
-          }
-          {
-            this.state.fuzzySearch &&
-            <ul>
-              {this.renderFuzzyBeers()}
-            </ul>
-          }
-
+        <div>
+          <ul>
+            {this.renderBeers()}
+          </ul>
+        </div>
       </div>
     )
   }

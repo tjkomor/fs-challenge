@@ -11,8 +11,16 @@
   width: 8em;
 }
 
+ul {
+  columns: 3;
+}
+
 .dislike-btn {
   width: 8em;
+}
+
+.search {
+  padding: 1em;
 }
 
 .like-div {
